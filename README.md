@@ -1,5 +1,6 @@
 # ninux_GPS_lora_esp32
 
+## works with BN-880 GPS
 
 ##make a confi.h file with following lines:
 
