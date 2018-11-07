@@ -157,36 +157,30 @@ void displayInfo()
 
 
 void GPSStatus(){
-
-     //while (!gps.location.isValid()){
-        while (Serial2.available() > 0 ){
-          if (gps.encode(Serial2.read()) and !gps.location.isValid()){
+  
+        while (Serial2.available() > 0 or !gps.location.isValid()){
+          
+          if (gps.encode(Serial2.read())) {
             //displayInfo();
             displayInfoOnDisplay();
             GPSbytes++;
+            if (gps.location.isValid()){
+              display.drawString(0, 0, "GPS fix");
+              display.display();
+              sleep(2);
+              display.clear();
+              displayInfoOnDisplay();
+              break;
+            }
           }
         }
+
         if (millis() > 5000 && gps.charsProcessed() < 10)
         {
           Serial.println(F("No GPS detected: check wiring."));
           while(true);
         }
-        
-     //} 
-     
-      
-      //displayInfo();
-      if(gps.location.isValid()){
-        display.drawString(0, 0, "GPS fix");
-        display.display();
-        sleep(2);
-        display.clear();
-        displayInfoOnDisplay();
-      }
-  
 }
-
-
 
 
 void onEvent (ev_t ev) {
